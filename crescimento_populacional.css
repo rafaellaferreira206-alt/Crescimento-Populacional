@@ -1,0 +1,338 @@
+
+/* ── Variáveis ── */
+:root {
+  --terra:       #2c1a0e;
+  --solo:        #3d2b1a;
+  --musgo:       #4a6741;
+  --folha:       #6a9e57;
+  --broto:       #8ec97a;
+  --luz:         #d4f0b8;
+  --areia:       #e8d8b0;
+  --creme:       #f5efe0;
+  --acento:      #c0a44a;
+  --acento-claro:#e8c96a;
+  --texto:       #1a1208;
+  --texto-suave: #5a4a30;
+  --card-bg:     rgba(255,255,255,0.55);
+  --sombra:      0 8px 40px rgba(44,26,14,0.18);
+}
+ 
+/* ── Reset & Base ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+ 
+html {
+  scroll-behavior: smooth;
+}
+ 
+body {
+  font-family: 'DM Mono', monospace;
+  background-color: var(--terra);
+  color: var(--texto);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+ 
+/* ── Fundo animado com textura orgânica ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 20%, rgba(74,103,65,0.35) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 85% 75%, rgba(106,158,87,0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 100% 50% at 50% 100%, rgba(44,26,14,0.9) 0%, transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  background-color: #1e3318;
+  z-index: -2;
+  pointer-events: none;
+}
+ 
+/* Anéis de crescimento decorativos (fundo) */
+body::after {
+  content: '';
+  position: fixed;
+  width: 900px;
+  height: 900px;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  border: 1px solid rgba(142,201,122,0.06);
+  box-shadow:
+    0 0 0 60px  rgba(142,201,122,0.04),
+    0 0 0 120px rgba(142,201,122,0.03),
+    0 0 0 200px rgba(142,201,122,0.025),
+    0 0 0 300px rgba(142,201,122,0.015),
+    0 0 0 420px rgba(142,201,122,0.01);
+  z-index: -1;
+  pointer-events: none;
+  animation: pulseRings 8s ease-in-out infinite;
+}
+ 
+@keyframes pulseRings {
+  0%, 100% { transform: translate(-50%, -50%) scale(1);   opacity: 1; }
+  50%       { transform: translate(-50%, -50%) scale(1.04); opacity: 0.7; }
+}
+ 
+/* ── Container principal ── */
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 60px 24px 80px;
+  animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) both;
+}
+ 
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+ 
+/* ── Cabeçalho ── */
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  font-weight: 900;
+  color: var(--creme);
+  text-align: center;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 8px;
+  position: relative;
+}
+ 
+h1::before {
+  content: '⬡';
+  display: block;
+  font-size: 2rem;
+  color: var(--acento);
+  text-align: center;
+  margin-bottom: 10px;
+  animation: spinSlow 20s linear infinite;
+}
+ 
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+ 
+h1::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--musgo), var(--acento), var(--broto));
+  margin: 16px auto 0;
+  border-radius: 2px;
+}
+ 
+/* ── Formulário — card de vidro ── */
+#form-crescimento {
+  background: rgba(245, 239, 224, 0.07);
+  border: 1px solid rgba(212,240,184,0.15);
+  border-radius: 20px;
+  padding: 40px 36px;
+  margin-top: 40px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--sombra), inset 0 1px 0 rgba(255,255,255,0.1);
+  position: relative;
+  overflow: hidden;
+}
+ 
+/* Detalhe de canto vivo */
+#form-crescimento::before {
+  content: '';
+  position: absolute;
+  top: -2px; right: -2px;
+  width: 80px; height: 80px;
+  background: linear-gradient(135deg, var(--folha), transparent 60%);
+  border-radius: 0 20px 0 80px;
+  opacity: 0.4;
+}
+ 
+/* ── Labels ── */
+label {
+  display: block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--broto);
+  margin-bottom: 6px;
+  margin-top: 4px;
+}
+ 
+/* ── Inputs ── */
+input[type="number"] {
+  width: 100%;
+  padding: 13px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--creme);
+  background: rgba(30,51,24,0.7);
+  border: 1px solid rgba(142,201,122,0.22);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
+  margin-bottom: 22px;
+  -moz-appearance: textfield;
+}
+ 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 0.3;
+}
+ 
+input[type="number"]:focus {
+  border-color: var(--broto);
+  background: rgba(30,51,24,0.9);
+  box-shadow: 0 0 0 3px rgba(142,201,122,0.18), 0 2px 12px rgba(0,0,0,0.25);
+}
+ 
+input[type="number"]::placeholder {
+  color: rgba(212,240,184,0.25);
+}
+ 
+/* ── Botão Calcular ── */
+#calcular {
+  display: block;
+  width: 100%;
+  padding: 16px 24px;
+  margin-top: 6px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--terra);
+  background: linear-gradient(135deg, var(--broto) 0%, var(--acento-claro) 100%);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.18s, box-shadow 0.18s;
+  box-shadow: 0 4px 20px rgba(142,201,122,0.35);
+}
+ 
+#calcular::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--acento-claro), var(--broto));
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+ 
+#calcular:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(142,201,122,0.45);
+}
+ 
+#calcular:hover::before {
+  opacity: 1;
+}
+ 
+#calcular:active {
+  transform: translateY(0);
+}
+ 
+#calcular span,
+#calcular {
+  position: relative;
+  z-index: 1;
+}
+ 
+/* Ícone sutil no botão */
+#calcular::after {
+  content: ' ↗';
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+ 
+/* ── Seção de resultados ── */
+#resultados {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+ 
+/* Cada linha de resultado */
+#resultados p {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  background: rgba(245,239,224,0.06);
+  border: 1px solid rgba(212,240,184,0.1);
+  border-left: 3px solid var(--musgo);
+  border-radius: 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.92rem;
+  color: var(--areia);
+  backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+  animation: slideIn 0.4s cubic-bezier(0.22,1,0.36,1) both;
+  transition: border-left-color 0.2s, background 0.2s;
+}
+ 
+/* Entrada escalonada dos resultados */
+#resultados p:nth-child(1)  { animation-delay: 0.00s; border-left-color: var(--musgo); }
+#resultados p:nth-child(2)  { animation-delay: 0.04s; border-left-color: #517a48; }
+#resultados p:nth-child(3)  { animation-delay: 0.08s; border-left-color: #5a8a4f; }
+#resultados p:nth-child(4)  { animation-delay: 0.12s; border-left-color: #639a56; }
+#resultados p:nth-child(5)  { animation-delay: 0.16s; border-left-color: var(--folha); }
+#resultados p:nth-child(6)  { animation-delay: 0.20s; border-left-color: #72a862; }
+#resultados p:nth-child(7)  { animation-delay: 0.24s; border-left-color: #7db86b; }
+#resultados p:nth-child(8)  { animation-delay: 0.28s; border-left-color: #87c474; }
+#resultados p:nth-child(9)  { animation-delay: 0.32s; border-left-color: var(--broto); }
+#resultados p:nth-child(10) { animation-delay: 0.36s; border-left-color: var(--broto); }
+#resultados p:nth-child(n+11) { animation-delay: 0.4s; border-left-color: var(--broto); }
+ 
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+ 
+#resultados p:hover {
+  background: rgba(245,239,224,0.1);
+  border-left-color: var(--acento);
+}
+ 
+/* Barra de progresso interna (decoração) */
+#resultados p::after {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: inherit;
+}
+ 
+/* ── Scrollbar temática ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--terra); }
+::-webkit-scrollbar-thumb {
+  background: var(--musgo);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--folha);
+}
+ 
+/* ── Responsivo ── */
+@media (max-width: 520px) {
+  .container { padding: 36px 16px 60px; }
+  #form-crescimento { padding: 28px 20px; }
+  h1 { font-size: 1.8rem; }
+  #resultados p { font-size: 0.82rem; padding: 12px 14px; }
+}
